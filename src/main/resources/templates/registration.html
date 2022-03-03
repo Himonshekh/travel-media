@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Travel Media</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+</head>
+<body>
+    <h1>Travel Media .... Registration</h1>
+    <div id="travel-img">
+        <img th:src="@{/images/wengen.png}"/>
+    </div>
+    <form method="POST" th:action="@{/auth/register}" id="registerForm" th:object="${registrationDto}" >
+        <div th:if="${#fields.hasErrors()}">
+            <span class="validationError">
+                Please correct the problems below and resubmit.
+            </span>
+        </div>
+        <br/><br/>
+        <label th:for="email">Email: </label>
+        <input type="text" name="mail"/>
+
+        <span class="validationError"
+              th:if="${#fields.hasErrors('mail')}"
+              th:errors="*{mail}">Mail Error</span>
+        <br/><br/>
+
+        <label th:for="username">Fullname: </label>
+        <input type="text" name="username"/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('username')}"
+              th:errors="*{username}">Mail Error</span>
+        <br/><br/>
+        <label th:for="password">Password: </label>
+        <input type="password" name="password"/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('password')}"
+              th:errors="*{password}">Mail Error</span>
+        <br/><br/>
+
+        <label th:for="confirm">Confirm password: </label>
+        <input type="password" name="confirm"/><br/><br/>
+
+        <input type="submit" value="Register"/>
+    </form>
+</body>
+</html>

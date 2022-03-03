@@ -1,0 +1,23 @@
+
+.grid:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+*, *:after, *:before {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+
+span.validationError {
+    color: red;
+}
+#travel-img img{
+    height: 200px;
+    width: 400px;
+}
+.logout-class form{
+    text-align: right;
+}

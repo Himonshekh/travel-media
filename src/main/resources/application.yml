@@ -1,0 +1,12 @@
+
+spring:
+  datasource:
+      url: jdbc:mysql://localhost/travelmedia
+      username: root
+      password: bs23
+logging:
+  level:
+    tacos: WARN
+
+greeting:
+  welcome: You are using ${spring.application.name}.
