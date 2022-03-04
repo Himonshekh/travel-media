@@ -3,6 +3,8 @@
       xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Travel Media</title>
+    <link rel="stylesheet" th:href="@{/styles.css}" />
+    <script type="text/javascript" th:src="@{/js/dropdown.js}"></script>
 </head>
 
 <body>
@@ -10,9 +12,75 @@
 <h1 >Welcome to Travel media...Home page</h1>
 
 <div class="logout-class">
-    <form method="POST"  th:action="@{/logout}">
+    <form method="POST" id="logoutForm" th:action="@{/logout}">
         <input type="submit" value="Logout"/>
     </form>
 </div>
+
+<div class="create-post-class" th:object="${privacyDto}">
+    <form method="POST" th:action="@{/post/create}" id="createPostForm" th:object="${postDto}" >
+        <div th:if="${#fields.hasErrors()}">
+            <span class="validationError">
+                Please correct the problems below and resubmit.
+            </span>
+        </div>
+
+        <label for="status">Post a Status</label><br/>
+        <textarea name="status" id="status" th:value="${postDto.getStatus()}"></textarea><br/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('status')}"
+              th:errors="*{status}">status Error</span>
+
+        <div>
+            <label>choose privacy</label>
+        </div>
+        <div id="choose-id" th:each="privacy : ${privacyDto.getPrivacies()}">
+            <input name="privacy" type="radio" th:value="${privacy}" />
+            <span th:text="${privacy}">Public</span>
+        </div>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('privacy')}"
+              th:errors="*{privacy}">privacy Error</span>
+
+        <div th:object="${locationList}">
+            <label>Check in</label>
+            <select name="location">
+                <option th:each="location : ${locationList}" th:text="${location.getName()}"></option>
+            </select>
+        </div>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('location')}"
+              th:errors="*{location}">location Error</span>
+        <div>
+            <input type="submit" value="post"/>
+        </div>
+    </form>
+</div>
+<br/>=======================================================<br/>=======================================================<br/><br/>
+<div class="view-post-class" th:object="${postDtoList}">
+<!--    <form method="POST" id="viewForm" th:action="@{/post/edit}" >-->
+        <div th:each="postDto : ${postDtoList}">
+            <form method="POST"  th:action="@{'/post/edit/'+${postDto.getId()}}" th:object="${postDtoList}">
+<!--                <div th:if="${#fields.hasErrors()}">-->
+<!--                    <span class="validationError">-->
+<!--                        Please correct the problems below and resubmit.-->
+<!--                    </span>-->
+<!--                </div>-->
+
+<!--                <input name="id+${postDto.getId()}" th:hidden="" th:value="${postDto.getId()}"/>-->
+                <span th:text="${postDto.getUser().getUsername()}" >username</span><br/>
+                <span th:text="${postDto.getStatus()}" >status</span><br/>
+                <span th:text="${postDto.getLocation()}">location</span><br/>
+                <div th:object="${user}">
+                    <div th:if="${postDto.getUser().getId().equals(user.getId())}">
+                        <input type="submit" value="edit" /><br/>
+                    </div>
+                </div>
+                =======================================================<br/>
+            </form>
+        </div>
+<!--    </form>-->
+</div>
+
 </body>
 </html>

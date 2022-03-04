@@ -8,6 +8,7 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class DevelopmentConfig {
+
     @Bean
     public CommandLineRunner dataLoader(LocationRepository locationRepository){
         return  new CommandLineRunner() {

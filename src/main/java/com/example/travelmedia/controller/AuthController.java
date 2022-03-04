@@ -6,7 +6,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,13 +35,19 @@ public class AuthController {
         return "registration";
     }
     @PostMapping("/register")
-    public String postRegistrationForm(@Valid RegistrationDto registrationDto, Errors errors){
+    public String postRegistrationForm(@Valid RegistrationDto registrationDto, BindingResult bindingResult){
         log.info("in post register controller...");
         log.info("registration form : "+registrationDto);
-        if(errors.hasErrors()){
+        if(bindingResult.hasErrors()){
             return "registration";
         }
-        userService.saveRegistrationForm(registrationDto);
+        if(!userService.saveRegistrationForm(registrationDto)){
+            bindingResult.addError(new ObjectError("confirm","must match"));
+            if(bindingResult.hasErrors())return "registration";
+
+            log.info("no errorr");
+            return "registration";
+        }
 
         return "redirect:/login";
     }

@@ -15,6 +15,7 @@
         <div th:if="${#fields.hasErrors()}">
             <span class="validationError">
                 Please correct the problems below and resubmit.
+
             </span>
         </div>
         <br/><br/>
@@ -41,6 +42,9 @@
 
         <label th:for="confirm">Confirm password: </label>
         <input type="password" name="confirm"/><br/><br/>
+        <span class="validationError"
+              th:if="${#fields.hasErrors('confirm')}"
+              th:errors="*{confirm}">password math Error</span>
 
         <input type="submit" value="Register"/>
     </form>

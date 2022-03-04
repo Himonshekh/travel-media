@@ -2,6 +2,7 @@ package com.example.travelmedia.service;
 
 import com.example.travelmedia.dto.RegistrationDto;
 import com.example.travelmedia.dto.UserDto;
+import com.example.travelmedia.model.User;
 import com.example.travelmedia.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -19,7 +20,13 @@ public class UserService {
         this.passwordEncoder=passwordEncoder;
     }
 
-    public void saveRegistrationForm(RegistrationDto registrationDto){
+    public boolean saveRegistrationForm(RegistrationDto registrationDto){
+        if(!registrationDto.getPassword().equals(registrationDto.getConfirm()))return false;
         userRepository.save(registrationDto.toUser(passwordEncoder));
+        return true;
+    }
+    public User fetchUserByMail(String mail){
+        User user = userRepository.findByMail(mail);
+        return user;
     }
 }

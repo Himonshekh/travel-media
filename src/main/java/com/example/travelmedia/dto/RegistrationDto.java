@@ -11,12 +11,12 @@ import javax.validation.constraints.Size;
 @Data
 public class RegistrationDto {
     @NotNull
-    @Pattern(regexp="^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$",
-            message="Must be formatted : travel.com")
+//    @Pattern(regexp="^[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+(?:\\.[a-zA-Z0-9_!#$%&'*+/=?`{|}~^-]+)*@[a-zA-Z0-9-]+(?:\\.[a-zA-Z0-9-]+)*$", message="Must be formatted : travel.com")
     private String mail;
     @NotNull
-    @Size(min = 5,message = "password must be at least 5 characters long")
+    @Size(min = 1,message = "password must be at least 5 characters long")
     private String password;
+    @Size(min = 1,message = "password must be at least 5 characters long")
     private String confirm;
     @NotNull
     private String username;

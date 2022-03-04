@@ -1,5 +1,6 @@
 package com.example.travelmedia.config;
 
+import com.example.travelmedia.dto.PrivacyDto;
 import com.example.travelmedia.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -68,5 +69,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .userDetailsService(userDetailsService)
                 .passwordEncoder(encoder())
         ;
+    }
+    @Bean
+    public PrivacyDto privacyDto(){
+        return new PrivacyDto();
     }
 }
