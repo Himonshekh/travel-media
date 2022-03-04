@@ -52,7 +52,14 @@ public class PostService {
         }
         return postDtoList;
     }
-
+    public void updateThisPost(PostDto postDto,User user){
+        Optional<Post> postOptional = postRepository.findById(postDto.getId());
+        Post post = postOptional.get();
+        post.setStatus(postDto.getStatus());
+        post.setLocation(getLocation(postDto.getLocation()));
+        post.setPrivacy(postDto.getPrivacy());
+        postRepository.save(post);
+    }
     public void saveThisPost(PostDto postDto,User user){
         Post post= new Post(toUser(user),postDto.getStatus(),getLocation(postDto.getLocation()),postDto.getPrivacy());
         postRepository.save(post);

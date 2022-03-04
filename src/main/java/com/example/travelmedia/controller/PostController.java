@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -34,7 +35,6 @@ public class PostController {
     @Autowired
     @Qualifier("locationService")
     LocationService locationService;
-
     @Autowired
     @Qualifier("userService")
     UserService userService;
@@ -90,13 +90,16 @@ public class PostController {
         return "edit";
     }
     @PostMapping("/edit")
-    public String editSubmitPost(@Valid PostDto postDto, BindingResult bindingResult,Model model, @ModelAttribute PrivacyDto privacyDto){
+    public String editSubmitPost(@Valid PostDto postDto,BindingResult bindingResult,@AuthenticationPrincipal User user, Model model, @ModelAttribute PrivacyDto privacyDto){
+        log.info("editsubmitpost:::::::::::: : "+postDto);
         if(bindingResult.hasErrors()){
             log.info("errrroooooorrrr : "+postDto.getId());
             postDto=postService.fetchPostById(postDto.getId());
             List<Location> locationList = locationService.fetchAllLocation();
 
             log.info("edit fetch post : "+postDto);
+//            postDto.setStatus();
+            bindingResult.addError(new ObjectError("status","status length"));
             privacyDto.setPrivacies(Arrays.asList("public","private"));
             model.addAttribute(postDto);
             model.addAttribute(privacyDto);
@@ -104,7 +107,8 @@ public class PostController {
             return "edit";
         }
         log.info("edit postDto: "+postDto);
-//        postService.saveThisPost(postDto,user);
+        postService.updateThisPost(postDto,user);
+        log.info("update success full");
         return "redirect:/home";
     }
 }

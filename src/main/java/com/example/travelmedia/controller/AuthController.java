@@ -35,15 +35,16 @@ public class AuthController {
         return "registration";
     }
     @PostMapping("/register")
-    public String postRegistrationForm(@Valid RegistrationDto registrationDto, BindingResult bindingResult){
+    public String postRegistrationForm(@Valid RegistrationDto registrationDto, Errors errors){
         log.info("in post register controller...");
         log.info("registration form : "+registrationDto);
-        if(bindingResult.hasErrors()){
+        if(errors.hasErrors()){
             return "registration";
         }
         if(!userService.saveRegistrationForm(registrationDto)){
-            bindingResult.addError(new ObjectError("confirm","must match"));
-            if(bindingResult.hasErrors())return "registration";
+//            errors.addError(new ObjectError("confirm","must match"));
+            errors.addAllErrors((Errors) new ObjectError("match","errors"));
+            if(errors.hasErrors())return "registration";
 
             log.info("no errorr");
             return "registration";
