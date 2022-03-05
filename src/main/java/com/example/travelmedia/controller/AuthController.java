@@ -1,14 +1,14 @@
 package com.example.travelmedia.controller;
 
+import com.example.travelmedia.dto.CustomError;
 import com.example.travelmedia.dto.RegistrationDto;
 import com.example.travelmedia.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
-import org.springframework.validation.BindingResult;
+import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,6 +28,10 @@ public class AuthController {
     public RegistrationDto registrationDto(){
         return new RegistrationDto();
     }
+    @ModelAttribute(name="customError")
+    public CustomError customError(){
+        return new CustomError();
+    }
 
     @GetMapping("/register")
     public String getRegistrationForm(){
@@ -35,18 +39,25 @@ public class AuthController {
         return "registration";
     }
     @PostMapping("/register")
-    public String postRegistrationForm(@Valid RegistrationDto registrationDto, Errors errors){
+    public String postRegistrationForm(@Valid @ModelAttribute RegistrationDto registrationDto, Errors errors, Model model,@ModelAttribute CustomError customError){
         log.info("in post register controller...");
         log.info("registration form : "+registrationDto);
         if(errors.hasErrors()){
             return "registration";
         }
+        log.info("no has error inside auth...");
+        if(userService.isAlreadyUsedMail(registrationDto.getMail())){
+            log.info("already mail found error");
+            customError.customErrors.put("mail","Already used");
+            model.addAttribute(customError);
+            /// set already input text??
+            return "registration";
+        }
         if(!userService.saveRegistrationForm(registrationDto)){
-//            errors.addError(new ObjectError("confirm","must match"));
-            errors.addAllErrors((Errors) new ObjectError("match","errors"));
-            if(errors.hasErrors())return "registration";
-
-            log.info("no errorr");
+            log.info("error saving way....");
+            customError.customErrors.put("confirm","confirm error");
+            model.addAttribute(customError);
+            log.info("after set er  ror....");
             return "registration";
         }
 

@@ -1,9 +1,11 @@
 package com.example.travelmedia.controller;
 
+import com.example.travelmedia.dto.CustomError;
 import com.example.travelmedia.dto.PostDto;
 import com.example.travelmedia.dto.PrivacyDto;
 import com.example.travelmedia.dto.RegistrationDto;
 import com.example.travelmedia.model.Location;
+import com.example.travelmedia.model.Post;
 import com.example.travelmedia.service.LocationService;
 import com.example.travelmedia.service.PostService;
 import com.example.travelmedia.service.UserService;
@@ -14,8 +16,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -44,6 +45,11 @@ public class PostController {
         return new PostDto();
     }
 
+    @ModelAttribute(name="customError")
+    public CustomError customError(){
+        return new CustomError();
+    }
+
     @ModelAttribute("privacyDto")
     public PrivacyDto privacyDto(){
         return new PrivacyDto();
@@ -51,9 +57,9 @@ public class PostController {
 
 
     @PostMapping("/create")
-    public String createPost(@Valid PostDto postDto, BindingResult bindingResult, @AuthenticationPrincipal User user,Model model,@ModelAttribute PrivacyDto privacyDto){
+    public String createPost(@Valid PostDto postDto, Errors errors, @AuthenticationPrincipal User user,Model model,@ModelAttribute PrivacyDto privacyDto){
         log.info("postDto: "+postDto);
-        if(bindingResult.hasErrors()){
+        if(errors.hasErrors()){
             log.info("create : hasError");
             List<PostDto> postDtoList = postService.fetchForHomePage(user.getUsername());
 //        postDtoList.add(new PostDto("himon","status done","dhaka","public"));postDtoList.add(new PostDto("asd","status asd","dhaasdka","public"));postDtoList.add(new PostDto("himasdon","status sd","asda","public"));
@@ -90,17 +96,16 @@ public class PostController {
         return "edit";
     }
     @PostMapping("/edit")
-    public String editSubmitPost(@Valid PostDto postDto,BindingResult bindingResult,@AuthenticationPrincipal User user, Model model, @ModelAttribute PrivacyDto privacyDto){
+    public String editSubmitPost(@Valid PostDto postDto, Errors errors, @AuthenticationPrincipal User user, Model model, @ModelAttribute PrivacyDto privacyDto,@ModelAttribute CustomError customError){
         log.info("editsubmitpost:::::::::::: : "+postDto);
-        if(bindingResult.hasErrors()){
+        if(errors.hasErrors()){
             log.info("errrroooooorrrr : "+postDto.getId());
             postDto=postService.fetchPostById(postDto.getId());
             List<Location> locationList = locationService.fetchAllLocation();
-
+            customError.customErrors.put("status","status not empty");
             log.info("edit fetch post : "+postDto);
-//            postDto.setStatus();
-            bindingResult.addError(new ObjectError("status","status length"));
             privacyDto.setPrivacies(Arrays.asList("public","private"));
+            model.addAttribute(customError);
             model.addAttribute(postDto);
             model.addAttribute(privacyDto);
             model.addAttribute(locationList);

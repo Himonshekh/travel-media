@@ -18,6 +18,13 @@ span.validationError {
     height: 200px;
     width: 400px;
 }
+.right-button{
+    text-align: right;
+    font-size: 22px;
+}
+.right-button a{
+    text-decoration: none;
+}
 .logout-class form{
     text-align: right;
 }

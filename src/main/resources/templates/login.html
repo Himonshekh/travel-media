@@ -6,13 +6,16 @@
     <link rel="stylesheet" th:href="@{/styles.css}" />
 </head>
 <body>
-    <h1>Login</h1>
+    <h1>Login Travel Media</h1>
 <!--    <img th:src="@{/images/TacoCloud.png}"/>-->
-    <div th:if="${error}">
-        Unable to login. Check your username and password.
-    </div>
+
     <p>New here? Click
         <a th:href="@{/auth/register}">here</a> to register.</p>
+
+    <br/>
+    <span class=validationError th:if="${param.get('error')}">
+        Unable to login. Check your username and password.
+    </span>
     <form method="POST" th:action="@{/login}" id="loginForm">
         <label for="username">Mail: </label>
         <input type="text" name="username" id="username" /><br/>

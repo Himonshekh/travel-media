@@ -8,9 +8,21 @@
 </head>
 <body>
     <h1>Travel Media .... Registration</h1>
+    <div class="right-button">
+<!--        <a href="/login">back?</a>-->
+        <a th:href="@{/login}">back?</a>
+<!--        <form method="POST" id="logoutForm" th:action="@{/login}">-->
+<!--            <input type="submit" value="back?"/>-->
+<!--        </form>-->
+    </div>
+
     <div id="travel-img">
         <img th:src="@{/images/wengen.png}"/>
     </div>
+
+<!--        <span th:if="${customError.errorList.containsKey('confirm')==true}">Confirmation mismatched</span>-->
+
+
     <form method="POST" th:action="@{/auth/register}" id="registerForm" th:object="${registrationDto}" >
         <div th:if="${#fields.hasErrors()}">
             <span class="validationError">
@@ -21,6 +33,7 @@
         <br/><br/>
         <label th:for="email">Email: </label>
         <input type="text" name="mail"/>
+        <span class="validationError" th:if="${customError.customErrors.containsKey('mail')==true}">Already used! Try with different one</span>
 
         <span class="validationError"
               th:if="${#fields.hasErrors('mail')}"
@@ -41,10 +54,12 @@
         <br/><br/>
 
         <label th:for="confirm">Confirm password: </label>
-        <input type="password" name="confirm"/><br/><br/>
+        <input type="password" name="confirm"/>
+        <span class="validationError" th:if="${customError.customErrors.containsKey('confirm')==true}">Confirmation mismatched</span>
+        <br/><br/>
         <span class="validationError"
               th:if="${#fields.hasErrors('confirm')}"
-              th:errors="*{confirm}">password math Error</span>
+              th:errors="*{confirm}">Confirmation mismatched by has error</span>
 
         <input type="submit" value="Register"/>
     </form>

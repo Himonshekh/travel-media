@@ -40,9 +40,15 @@ public class PostService {
     public List<PostDto> fetchForHomePage(String mail){
 //        @AuthenticationPrincipal String mail;
         List<Post> posts = postRepository.findAll();
-        Long id = userRepository.findByMail(mail).getId();
-
         List<PostDto>postDtoList = new ArrayList<>();
+        Optional<com.example.travelmedia.model.User> userOptional = userRepository.findByMail(mail);
+        com.example.travelmedia.model.User user = null;
+        if(userOptional.isPresent()){
+            user=userOptional.get();
+        }else {
+            return postDtoList;
+        }
+        Long id = user.getId();
 
 //        posts.forEach();
         for (Post post:posts){
@@ -66,7 +72,11 @@ public class PostService {
         log.info("post save successfully: "+post);
     }
     public com.example.travelmedia.model.User toUser(User user){
-        com.example.travelmedia.model.User user1 = userRepository.findByMail(user.getUsername());
+        Optional<com.example.travelmedia.model.User> userOptional = userRepository.findByMail(user.getUsername());
+        com.example.travelmedia.model.User user1 =null;
+        if (userOptional.isPresent()){
+            user1=userOptional.get();
+        }
         return user1;
     }
     public Location getLocation(String location){

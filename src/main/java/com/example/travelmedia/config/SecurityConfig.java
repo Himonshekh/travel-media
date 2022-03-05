@@ -42,8 +42,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //                    .antMatchers("/**").access("permitAll()")
                 .and()
                 .formLogin()
-                .loginPage("/login")
-                        .defaultSuccessUrl("/home",true)
+                    .loginPage("/login")
+                    .defaultSuccessUrl("/home",true)
+                    .failureUrl("/login?error=true")
 
                 .and()
                 .logout()
