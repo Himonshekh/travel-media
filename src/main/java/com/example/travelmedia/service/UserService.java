@@ -1,7 +1,6 @@
 package com.example.travelmedia.service;
 
 import com.example.travelmedia.dto.RegistrationDto;
-import com.example.travelmedia.dto.UserDto;
 import com.example.travelmedia.model.User;
 import com.example.travelmedia.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;

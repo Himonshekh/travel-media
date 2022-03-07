@@ -14,9 +14,9 @@ body {
     /*vertical-align: middle;*/
 }
 .main-div{
-    width: 75%;
+    width: 65%;
     vertical-align: middle;
-    margin: 0% 0% 0% 13%;
+    margin: 0% 0% 0% 16%;
 }
 .main-div .login-section input{
     margin-bottom: 1%;
@@ -69,7 +69,7 @@ span.validationError {
     margin-top: 1%;
 }
 .create-post-class textarea {
-    width: 300px;
+    width: 65%;
     height: 65px;
     border-radius: 5px;
 }

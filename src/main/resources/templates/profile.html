@@ -14,7 +14,7 @@
     <a th:href="@{/home/friends}">Friends</a>
     <a th:href="@{/logout}">Log Out</a>
     <div class="search-container">
-        <form th:action="@{/home/search}">
+        <form method="post" th:action="@{/home/search}">
             <input type="text" placeholder="Search.." name="search">
             <button type="submit">Submit</button>
         </form>

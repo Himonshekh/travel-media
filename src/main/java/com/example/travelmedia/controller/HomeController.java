@@ -79,11 +79,14 @@ public class HomeController {
     }
     @GetMapping("/friends")
     public String GoFriendPage(@AuthenticationPrincipal User user){
+        log.info("friend get: ");
         return "friends";
     }
+
     @PostMapping("/search")
     public String GoSearchPage(String search,@AuthenticationPrincipal User user){
         log.info("search : "+search);
+
         return "search";
     }
 }
