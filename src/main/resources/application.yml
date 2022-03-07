@@ -7,6 +7,7 @@ spring:
 logging:
   level:
     tacos: WARN
+---
 
 greeting:
-  welcome: You are using ${spring.application.name}.
+  welcome : You are using ${spring.application.name}.

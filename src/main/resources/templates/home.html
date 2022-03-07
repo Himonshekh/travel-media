@@ -9,13 +9,21 @@
 
 <body>
 
-<h1 >Welcome to Travel media...Home page</h1>
-
-<div class="logout-class">
-    <form method="POST" id="logoutForm" th:action="@{/logout}">
-        <input type="submit" value="Logout"/>
-    </form>
+<div class="topnav">
+    <a class="active" th:href="@{/home}">Home</a>
+    <a th:href="@{/home/profile}">Profile</a>
+    <a th:href="@{/home/friends}">Friends</a>
+    <a th:href="@{/logout}">Log Out</a>
+    <div class="search-container">
+        <form method="POST" th:action="@{/home/search}">
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
 </div>
+
+<br/>
+<h1 >Welcome to Travel media......</h1><br/>
 
 <div class="create-post-class" th:object="${privacyDto}">
     <form method="POST" th:action="@{/post/create}" id="createPostForm" th:object="${postDto}" >
@@ -31,7 +39,7 @@
               th:if="${#fields.hasErrors('status')}"
               th:errors="*{status}">status Error</span>
 
-        <div>
+        <div class="margin-top-div">
             <label>choose privacy</label>
         </div>
         <div id="choose-id" th:each="privacy : ${privacyDto.getPrivacies()}">
@@ -42,7 +50,7 @@
               th:if="${#fields.hasErrors('privacy')}"
               th:errors="*{privacy}">privacy Error</span>
 
-        <div th:object="${locationList}">
+        <div class="margin-top-div" th:object="${locationList}">
             <label>Check in</label>
             <select name="location">
                 <option th:each="location : ${locationList}" th:text="${location.getName()}"></option>
@@ -51,16 +59,16 @@
         <span class="validationError"
               th:if="${#fields.hasErrors('location')}"
               th:errors="*{location}">location Error</span>
-        <div>
+        <div class="margin-top-div">
             <input type="submit" value="post"/>
         </div>
     </form>
 </div>
 <br/>=======================================================<br/>=======================================================<br/><br/>
 <div class="view-post-class" th:object="${postDtoList}">
-<!--    <form method="POST" id="viewForm" th:action="@{/post/edit}" >-->
+<!--    <form method="POST"  th:action="@{'/post/edit/'+${postDto.getId()}}" id="viewForm" th:action="@{/post/edit}" >-->
         <div th:each="postDto : ${postDtoList}">
-            <form method="POST"  th:action="@{'/post/edit/'+${postDto.getId()}}" th:object="${postDtoList}">
+            <div  th:object="${postDtoList}">
 <!--                <div th:if="${#fields.hasErrors()}">-->
 <!--                    <span class="validationError">-->
 <!--                        Please correct the problems below and resubmit.-->
@@ -72,13 +80,15 @@
                 <span th:text="${postDto.getUser().getUsername()}" >username</span><br/>
                 <span th:text="${postDto.getStatus()}" >status</span><br/>
                 <span th:text="${postDto.getLocation()}">location</span><br/>
+
                 <div th:object="${user}">
                     <div th:if="${postDto.getUser().getId().equals(user.getId())}">
-                        <input type="submit" value="edit" /><br/>
+                        <a th:href="@{'/post/edit/'+${postDto.getId()}}">Edit</a>
+<!--                        <input type="submit" value="edit" /><br/>-->
                     </div>
                 </div>
                 =======================================================<br/>
-            </form>
+            </div>
         </div>
 <!--    </form>-->
 </div>

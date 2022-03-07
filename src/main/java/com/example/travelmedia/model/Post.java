@@ -8,6 +8,7 @@ import lombok.RequiredArgsConstructor;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.util.Date;
 
 @Data
 @Entity
@@ -26,10 +27,18 @@ public class Post {
     private Location location;
     @NotNull
     private String privacy;
+    @NotNull
+    private Date placedAt;
+    private Long pined=0L;
     public Post(User user,String status,Location location,String privacy){
         this.user=user;
         this.status=status;
         this.location=location;
         this.privacy=privacy;
+        this.placedAt = new Date();
     }
+//    @PrePersist
+//    void placedAt() {
+//        this.placedAt = new Date();
+//    }
 }

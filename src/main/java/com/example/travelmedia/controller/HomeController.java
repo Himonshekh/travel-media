@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
@@ -64,5 +65,25 @@ public class HomeController {
         model.addAttribute(postDto);
         log.info("home page psotDto : "+postDto);
         return "home";
+    }
+    @GetMapping("/profile")
+    public String GoProfilePage(@AuthenticationPrincipal User user,Model model){
+        List<PostDto> postDtoList = postService.fetchForProfilePageByUser(user.getUsername());
+        com.example.travelmedia.model.User user1 = userService.fetchUserByMail(user.getUsername());
+
+        model.addAttribute(user1);
+        model.addAttribute(postDtoList);
+        log.info("profile page postDtoList: "+postDtoList);
+        log.info("profile page user1:"+user1);
+        return "profile";
+    }
+    @GetMapping("/friends")
+    public String GoFriendPage(@AuthenticationPrincipal User user){
+        return "friends";
+    }
+    @PostMapping("/search")
+    public String GoSearchPage(String search,@AuthenticationPrincipal User user){
+        log.info("search : "+search);
+        return "search";
     }
 }

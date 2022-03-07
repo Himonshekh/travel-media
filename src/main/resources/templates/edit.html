@@ -6,10 +6,20 @@
     <link rel="stylesheet" th:href="@{/styles.css}" />
     <script type="text/javascript" th:src="@{/js/dropdown.js}"></script>
 </head>
-
 <body>
-
-<h1 >Welcome to Travel media...Edit page</h1>
+<div class="topnav">
+    <a class="active" th:href="@{/home}">Home</a>
+    <a th:href="@{/home/profile}">Profile</a>
+    <a th:href="@{/home/friends}">Friends</a>
+    <a th:href="@{/logout}">Log Out</a>
+    <div class="search-container">
+        <form th:action="@{/home/search}">
+            <input type="text" placeholder="Search.." name="search">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
+</div>
+<br/>
 
 <div class="logout-class">
     <form method="POST" id="logoutForm" th:action="@{/logout}">

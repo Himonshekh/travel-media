@@ -13,9 +13,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Service
 @Slf4j
@@ -31,11 +29,30 @@ public class PostService {
     @Qualifier("locationRepository")
     LocationRepository locationRepository;
 
+    public void resetPinPost(String mail){
+        List<Post> posts = postRepository.findAll();
+        Optional<com.example.travelmedia.model.User> userOptional = userRepository.findByMail(mail);
+        com.example.travelmedia.model.User user = null;
+        user=userOptional.get();
+        Long id = user.getId();
+        for (Post post:posts){
+            if(post.getUser().getId().equals(id)){
+                post.setPined(0L);
+            }
+        }
+        postRepository.saveAll(posts);
+    }
+    public void updatePostByPin(Long id,String mail){
+        resetPinPost(mail);
+        Optional<Post> postOptional = postRepository.findById(id);
+        Post post =postOptional.get();
+        post.setPined(1L);
+        postRepository.save(post);
+    }
     public PostDto fetchPostById(Long id){
         Optional<Post> postOptional = postRepository.findById(id);
         Post post =postOptional.get();
-
-        return new PostDto(post.getId(),post.getUser(), post.getStatus(),post.getLocation().getName(),post.getPrivacy());
+        return new PostDto(post.getId(),post.getUser(), post.getStatus(),post.getLocation().getName(),post.getPrivacy(),post.getPined());
     }
     public List<PostDto> fetchForHomePage(String mail){
 //        @AuthenticationPrincipal String mail;
@@ -51,12 +68,48 @@ public class PostService {
         Long id = user.getId();
 
 //        posts.forEach();
+        Collections.sort(posts,new customSort());
         for (Post post:posts){
             if(post.getUser().getId()==id || post.getPrivacy().charAt(1)=='u'){
-                postDtoList.add(new PostDto(post.getId(),post.getUser(), post.getStatus(),post.getLocation().getName(),post.getPrivacy()));
+                postDtoList.add(new PostDto(post.getId(),post.getUser(), post.getStatus(),post.getLocation().getName(),post.getPrivacy(),post.getPined()));
             }
         }
+//        Comparator<Post> compareBydate = (Post o1, Post o2) -> o1.getPlacedAt().compareTo( o2.getPlacedAt() );
         return postDtoList;
+    }
+    public List<PostDto> fetchForProfilePageByUser(String mail){
+
+        List<Post> posts = postRepository.findAll();
+        List<PostDto>postDtoList = new ArrayList<>();
+
+        Optional<com.example.travelmedia.model.User> userOptional = userRepository.findByMail(mail);
+        com.example.travelmedia.model.User user = null;
+        if(userOptional.isPresent()){
+            user=userOptional.get();
+        }else {
+            return postDtoList;
+        }
+        log.info("find user: "+user);
+        Long id = user.getId();
+
+//        posts.forEach();
+        Collections.sort(posts,new customSort());
+        for (Post post:posts){
+            if(post.getUser().getId()==id){
+                postDtoList.add(new PostDto(post.getId(),post.getUser(), post.getStatus(),post.getLocation().getName(),post.getPrivacy(),post.getPined()));
+            }
+        }
+//        Comparator<Post> compareBydate = (Post o1, Post o2) -> o1.getPlacedAt().compareTo( o2.getPlacedAt() );
+        return postDtoList;
+    }
+    static class customSort implements Comparator<Post> {
+        @Override
+        public int compare(Post o1, Post o2) {
+            int ret=o2.getPined().compareTo(o1.getPined());
+            if(ret!=0){
+                return ret;
+            }else return o2.getPlacedAt().compareTo(o1.getPlacedAt());
+        }
     }
     public void updateThisPost(PostDto postDto,User user){
         Optional<Post> postOptional = postRepository.findById(postDto.getId());

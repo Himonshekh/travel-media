@@ -28,6 +28,7 @@ public class User implements UserDetails {
     private String password;
     private String username;
     private String role;
+//    private Long pined=0L;
 
     public User(String mail,String password,String username){
         this.mail=mail;

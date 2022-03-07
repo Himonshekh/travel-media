@@ -22,12 +22,14 @@ public class PostDto {
     private String location;
     @NotNull
     private String privacy;
+    private Long pined;
 
-    public PostDto(Long id,User user,String status, String location, String privacy) {
+    public PostDto(Long id,User user,String status, String location, String privacy,Long pined) {
         this.id=id;
         this.user=user;
         this.status = status;
         this.location = location;
         this.privacy = privacy;
+        this.pined=pined;
     }
 }
