@@ -4,6 +4,7 @@
 <head>
     <title>Travel Media</title>
     <link rel="stylesheet" th:href="@{/styles.css}" />
+<!--    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />-->
     <script type="text/javascript" th:src="@{/js/dropdown.js}"></script>
 </head>
 <body>
@@ -20,59 +21,55 @@
     </div>
 </div>
 <br/>
-
-<div class="logout-class">
-    <form method="POST" id="logoutForm" th:action="@{/logout}">
-        <input type="submit" value="Logout"/>
-    </form>
-</div>
-<div class="create-post-class">
-    <form method="POST" th:action="@{/post/edit}" id="editPostForm" th:object="${postDto}">
-        <div th:if="${#fields.hasErrors()}">
-            <span class="validationError">
-                Please correct the problems below and resubmit.
-            </span>
-        </div>
-
-        <input name="id" th:value="${postDto.getId()}" type="hidden"/>
-
-        <label for="statusid">Post a Status</label><br/>
-        <textarea name="status" id="statusid" th:text="${postDto.getStatus()}"></textarea>
-        <span class="validationError" th:if="${customError.customErrors.containsKey('status')}">Status not empty</span><br/>
-        <span class="validationError"
-              th:if="${#fields.hasErrors('status')}"
-              th:errors="*{status}">status Error</span>
-        <div>
-            <label>choose privacy</label>
-        </div>
-        <div id="choose-id" th:each="privacy : ${privacyDto.getPrivacies()}">
-            <div th:if="${privacy.equals(postDto.getPrivacy())}">
-                <input name="privacy" type="radio" th:value="${privacy}"  checked/>
+<div class="main-div">
+    <div class="create-post-class">
+        <a th:href="@{'/post/delete/'+${postDto.getId()}}">Delete?</a>
+        <form method="POST" th:action="@{/post/edit}" id="editPostForm" th:object="${postDto}">
+            <div th:if="${#fields.hasErrors()}">
+                <span class="validationError">
+                    Please correct the problems below and resubmit.
+                </span>
             </div>
-            <div th:if="${!privacy.equals(postDto.getPrivacy())}">
-                <input name="privacy" type="radio" th:value="${privacy}"  />
+
+            <input name="id" th:value="${postDto.getId()}" type="hidden"/>
+
+            <label for="status">Post a Status</label><br/>
+            <textarea name="status" id="status" th:text="${postDto.getStatus()}"></textarea>
+            <span class="validationError" th:if="${customError.customErrors.containsKey('status')}">Status not empty</span><br/>
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('status')}"
+                  th:errors="*{status}">status Error</span>
+            <div class="margin-top-div">
+                <label>choose privacy</label>
             </div>
-            <span th:text="${privacy}">Public</span>
-        </div>
-        <span class="validationError"
-              th:if="${#fields.hasErrors('privacy')}"
-              th:errors="*{privacy}">privacy Error</span>
+            <div id="choose-id" th:each="privacy : ${privacyDto.getPrivacies()}">
+                <div th:if="${privacy.equals(postDto.getPrivacy())}">
+                    <input name="privacy" type="radio" th:value="${privacy}"  checked/>
+                </div>
+                <div th:if="${!privacy.equals(postDto.getPrivacy())}">
+                    <input name="privacy" type="radio" th:value="${privacy}"  />
+                </div>
+                <span th:text="${privacy}">Public</span>
+            </div>
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('privacy')}"
+                  th:errors="*{privacy}">privacy Error</span>
 
-        <div th:object="${locationList}">
-            <label>Check in</label>
-            <select name="location" >
-                <option th:each="location : ${locationList}" th:text="${location.getName()}" th:selected="${location.getName().equals(postDto.getLocation()) }"></option>
-            </select>
-        </div>
-        <span class="validationError"
-              th:if="${#fields.hasErrors('location')}"
-              th:errors="*{location}">location Error</span>
+            <div class="margin-top-div" th:object="${locationList}">
+                <label>Check in</label>
+                <select name="location" >
+                    <option th:each="location : ${locationList}" th:text="${location.getName()}" th:selected="${location.getName().equals(postDto.getLocation()) }"></option>
+                </select>
+            </div>
+            <span class="validationError"
+                  th:if="${#fields.hasErrors('location')}"
+                  th:errors="*{location}">location Error</span>
 
-        <div>
-            <input type="submit" value="post"/>
-        </div>
-    </form>
+            <div class="margin-top-div">
+                <input type="submit" value="post"/>
+            </div>
+        </form>
+    </div>
 </div>
-
 </body>
 </html>

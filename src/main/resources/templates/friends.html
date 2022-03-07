@@ -8,9 +8,9 @@
 </head>
 <body>
 <div class="topnav">
-    <a class="active" th:href="@{/home}">Home</a>
+    <a th:href="@{/home}">Home</a>
     <a th:href="@{/home/profile}">Profile</a>
-    <a th:href="@{/home/friends}">Friends</a>
+    <a class="active" th:href="@{/home/friends}">Friends</a>
     <a th:href="@{/logout}">Log Out</a>
     <div class="search-container">
         <form th:action="@{/home/search}">
@@ -19,6 +19,8 @@
         </form>
     </div>
 </div>
+<div class="main-div">
     <h1>friends</h1>
+</div>
 </body>
 </html>

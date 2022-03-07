@@ -7,9 +7,8 @@
     <link rel="stylesheet" th:href="@{/styles.css}" />
 </head>
 <body>
+<div class="main-div">
     <h1>Travel Media .... Registration</h1>
-
-
     <div id="travel-img">
         <img th:src="@{/images/wengen.png}"/>
     </div>
@@ -26,7 +25,7 @@
             </span>
         </div>
         <br/>
-        <label th:for="email">Email: </label>
+        <label th:for="email">email: </label>
         <input type="text" name="mail"/>
         <span class="validationError" th:if="${customError.customErrors.containsKey('mail')==true}">Already used! Try with different one</span>
 
@@ -35,20 +34,20 @@
               th:errors="*{mail}">Mail Error</span>
         <br/><br/>
 
-        <label th:for="username">Fullname: </label>
+        <label th:for="username">fullname: </label>
         <input type="text" name="username"/>
         <span class="validationError"
               th:if="${#fields.hasErrors('username')}"
               th:errors="*{username}">Mail Error</span>
         <br/><br/>
-        <label th:for="password">Password: </label>
+        <label th:for="password">password: </label>
         <input type="password" name="password"/>
         <span class="validationError"
               th:if="${#fields.hasErrors('password')}"
               th:errors="*{password}">Mail Error</span>
         <br/><br/>
 
-        <label th:for="confirm">Confirm password: </label>
+        <label th:for="confirm">confirm password: </label>
         <input type="password" name="confirm"/>
         <span class="validationError" th:if="${customError.customErrors.containsKey('confirm')==true}">Confirmation mismatched</span>
         <br/><br/>
@@ -61,6 +60,6 @@
             <a th:href="@{/login}">login?</a>
         </span>
     </form>
-
+</div>
 </body>
 </html>

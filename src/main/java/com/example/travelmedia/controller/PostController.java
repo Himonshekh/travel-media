@@ -19,6 +19,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import javax.websocket.server.PathParam;
 import java.util.Arrays;
@@ -117,6 +118,13 @@ public class PostController {
     public String pinedPost(@PathVariable Long id,@AuthenticationPrincipal User user){
         log.info("pinned post id : "+id);
         postService.updatePostByPin(id,user.getUsername());
+        return "redirect:/home/profile";
+    }
+    @GetMapping("/delete/{id}")
+    @Transactional
+    public String deletePost(@PathVariable Long id){
+        log.info("delete this post :" +id);
+        postService.deletePostById(id);
         return "redirect:/home/profile";
     }
 }

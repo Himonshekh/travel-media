@@ -4,12 +4,13 @@
 <head>
     <title>Travel Media</title>
     <link rel="stylesheet" th:href="@{/styles.css}" />
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.2/css/all.css" rel="stylesheet" type="text/css" />
     <script type="text/javascript" th:src="@{/js/dropdown.js}"></script>
 </head>
 <body>
 <div class="topnav">
     <a th:href="@{/home}">Home</a>
-    <a th:href="@{/home/profile}">Profile</a>
+    <a class="active" th:href="@{/home/profile}">Profile</a>
     <a th:href="@{/home/friends}">Friends</a>
     <a th:href="@{/logout}">Log Out</a>
     <div class="search-container">
@@ -19,26 +20,33 @@
         </form>
     </div>
 </div>
-    <h1>profile page</h1>
+<div class="main-div">
+    <h1 th:text="'Mr. '+${user.getUsername()}+ ' Profile'">profile page</h1>
+    <div class="view-post-class" th:object="${postDtoList}">
+        <div th:each="postDto : ${postDtoList}">
+            <div class="single-status" th:object="${postDtoList}">
+                <i class="fas fa-user"></i>
+                <span>Mr. </span>
+                <span th:text="${postDto.getUser().getUsername()}" >username</span><br/>
+                <div class="status-body">
+                    <i class="fa fa-sticky-note"></i>
+                    <span th:text="${postDto.getStatus()}" >status</span><br/>
+                </div>
 
-
-<div class="view-post-class" th:object="${postDtoList}">
-    <div th:each="postDto : ${postDtoList}">
-        <div th:object="${postDtoList}">
-            <span>Mr. </span>
-            <span th:text="${postDto.getUser().getUsername()}" >username</span><br/>
-            <span th:text="${postDto.getStatus()}" >status</span><br/>
-            <span th:text="${postDto.getLocation()}">location</span><br/>
-            <a th:href="@{'/post/edit/'+${postDto.getId()}}">Edit</a>
-            <span th:if="${postDto.getPined()==1}">pinned</span>
-            <span th:if="${postDto.getPined()==0}">
-                    <a th:href="@{'/post/pined/'+${postDto.getId()}}">pin?</a>
-            </span><br/>
-            =======================================================<br/>
+                <i class="fas fa-map-marker-alt"></i>
+                <span th:text="${postDto.getLocation()}">location</span><br/>
+                <div class="edit-pin-button">
+                    <a th:href="@{'/post/edit/'+${postDto.getId()}}">Edit</a>
+                    <span th:if="${postDto.getPined()==1}">pinned</span>
+                    <span th:if="${postDto.getPined()==0}">
+                        <a th:href="@{'/post/pined/'+${postDto.getId()}}">pin?</a>
+                    </span>
+                </div>
+                <br/>
+            </div>
         </div>
+        <!--    </form>-->
     </div>
-    <!--    </form>-->
 </div>
-
 </body>
 </html>

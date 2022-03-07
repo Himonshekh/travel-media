@@ -1,17 +1,25 @@
-html, body {
-    height: 100%;
-}
+/*html, body {*/
+/*    height: 100%;*/
+/*}*/
 
-html {
-    display: table;
-    margin: auto;
-    /*width: 70%;*/
-}
+/*html {*/
+/*    display: table;*/
+/*    margin: auto;*/
+/*    !*width: 70%;*!*/
+/*}*/
 body {
     margin: 0;
     font-family: Arial, Helvetica, sans-serif;
     /*display: table-cell;*/
+    /*vertical-align: middle;*/
+}
+.main-div{
+    width: 75%;
     vertical-align: middle;
+    margin: 0% 0% 0% 13%;
+}
+.main-div .login-section input{
+    margin-bottom: 1%;
 }
 .grid:after {
     content: "";
@@ -34,7 +42,7 @@ span.validationError {
 }
 .right-button{
     text-align: right;
-    font-size: 20px;
+    font-size: 16px;
 }
 .right-button a{
     text-decoration: none;
@@ -42,20 +50,63 @@ span.validationError {
 .logout-class form{
     text-align: right;
 }
-.create-post-class form #choose-id{
+.create-post-class {
+    padding: 2% 3% 5% 3%;
+    margin-bottom: 5%;
+    background: whitesmoke;
+    border-radius: 5px;
+    box-shadow: 5px 5px 5px rgb(0 0 0 / 20%);
+}.create-post-class form #choose-id{
     display: inline-flex;
     margin-right: 3%;
 }
 .create-post-class .margin-top-div{
     margin-top: 1%;
 }
+.create-post-class .margin-top-div input{
+    height: 30px;
+    width: 50px;
+    margin-top: 1%;
+}
 .create-post-class textarea {
-    width: 280px;
-    height: 60px;
+    width: 300px;
+    height: 65px;
+    border-radius: 5px;
 }
 .view-post-class a{
-margin-right: 2%;
+    margin-right: .5%;
     text-decoration: none;
+}
+.view-post-class .single-status{
+    padding: 1% 3% 2% 2%;
+    background: whitesmoke;
+    box-shadow: 3px 3px 15px rgb(0 0 0 / 15%);
+    border-radius: 5px;
+    margin: 3% 0% 3% 0%;
+}
+.view-post-class .single-status i{
+    padding-right: .6%;
+}
+.view-post-class .single-status .edit-button{
+    margin-top: 2%;
+    height: 35px;
+    width: 50px;
+    padding: 1% 0% 0% 1.5%;
+    background: mintcream;
+    border-radius: 5px;
+}
+.view-post-class .single-status .edit-pin-button{
+    margin-top: 2%;
+}
+.view-post-class .single-status .edit-pin-button a{
+    padding: 1% 1% 1% 1%;
+    background: mintcream;
+    border-radius: 5px;
+}
+.view-post-class .single-status .status-body{
+    padding: 2% 1% 2% 0%;
+    box-shadow: 0px 0px 0.7px rgb(0 0 0 / 20%);
+    border-radius: 5px;
 }
 /*********Drop down CSS start*********/
 /* Dropdown Button */

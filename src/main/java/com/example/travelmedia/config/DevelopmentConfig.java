@@ -14,13 +14,13 @@ public class DevelopmentConfig {
         return  new CommandLineRunner() {
             @Override
             public void run(String... args) throws Exception {
-                locationRepository.save(new Location("Dhaka"));
-                locationRepository.save(new Location("Sylhet"));
-                locationRepository.save(new Location("Dinajpur"));
-                locationRepository.save(new Location("Barishal"));
-                locationRepository.save(new Location("Bandarban"));
-                locationRepository.save(new Location("Khulna"));
-                locationRepository.save(new Location("Rajshahi"));
+//                locationRepository.save(new Location("Dhaka"));
+//                locationRepository.save(new Location("Sylhet"));
+//                locationRepository.save(new Location("Dinajpur"));
+//                locationRepository.save(new Location("Barishal"));
+//                locationRepository.save(new Location("Bandarban"));
+//                locationRepository.save(new Location("Khulna"));
+//                locationRepository.save(new Location("Rajshahi"));
             }
         };
     }

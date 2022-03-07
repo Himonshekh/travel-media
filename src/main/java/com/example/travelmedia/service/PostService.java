@@ -29,6 +29,9 @@ public class PostService {
     @Qualifier("locationRepository")
     LocationRepository locationRepository;
 
+    public void deletePostById(Long id){
+        postRepository.deleteById(id);
+    }
     public void resetPinPost(String mail){
         List<Post> posts = postRepository.findAll();
         Optional<com.example.travelmedia.model.User> userOptional = userRepository.findByMail(mail);
