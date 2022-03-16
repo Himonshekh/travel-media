@@ -7,60 +7,73 @@
     <link rel="stylesheet" th:href="@{/styles.css}" />
 </head>
 <body>
-<div class="main-div">
-    <h2>Travel Media .... </h2>
-    <h3>Registration</h3>
-    <div id="travel-img">
-        <img th:src="@{/images/wengen.png}"/>
-    </div>
+    <div class="log-reg-wrapper-div">
+        <div class="wrapper-div-img"></div>
+        <div class="container">
+            <div class="log-reg-box">
+                <h1>Travel Media .... </h1>
+                <h3>SIGN UP</h3>
+                    <form method="POST" th:action="@{/auth/register}" id="registerForm" th:object="${registrationDto}" >
+                        <div class="form-div">
+                            <div th:if="${#fields.hasErrors()}">
+                                <span class="validationError">
+                                    Please correct the problems below and resubmit.
+                                </span>
+                            </div>
+                            <div class="login-reg-flex">
+                                <label th:for="email">Email </label>
+                                <input type="text" name="mail"/>
+                            </div>
+                            <span class="validationError" th:if="${customError.customErrors.containsKey('mail')==true}">
+                                    Already used! Try with different one
+                                </span>
+                            <span class="validationError"
+                                  th:if="${#fields.hasErrors('mail')}"
+                                  th:errors="*{mail}">
+                                    Mail Error
+                                </span>
 
-<!--        <span th:if="${customError.errorList.containsKey('confirm')==true}">Confirmation mismatched</span>-->
+                            <div class="login-reg-flex">
+                                <label th:for="username">Fullname </label>
+                                <input type="text" name="username"/>
+                            </div>
 
+                            <span class="validationError"
+                                  th:if="${#fields.hasErrors('username')}"
+                                  th:errors="*{username}">Mail Error</span>
 
-    <form method="POST" th:action="@{/auth/register}" id="registerForm" th:object="${registrationDto}" >
-        <br/>
-        <div th:if="${#fields.hasErrors()}">
-            <span class="validationError">
-                Please correct the problems below and resubmit.
+                            <div class="login-reg-flex">
+                                <label th:for="password">Password </label>
+                                <input type="password" name="password"/>
+                            </div>
 
-            </span>
+                            <span class="validationError"
+                                  th:if="${#fields.hasErrors('password')}"
+                                  th:errors="*{password}">
+                                    Mail Error
+                                </span>
+
+                            <div class="login-reg-flex">
+                                <label th:for="confirm">Confirm </label>
+                                <input type="password" name="confirm"/>
+                            </div>
+
+                            <span class="validationError" th:if="${customError.customErrors.containsKey('confirm')==true}">Confirmation mismatched</span>
+                            <span class="validationError"
+                                  th:if="${#fields.hasErrors('confirm')}"
+                                  th:errors="*{confirm}">Confirmation mismatched by has error</span>
+
+                            <div class="common-button">
+                                <input type="submit" value="Register"/>
+                                <span class="right-button">
+                                    <a th:href="@{/login}">login?</a>
+                                </span>
+                            </div>
+                        </div>
+
+                    </form>
+            </div>
         </div>
-        <br/>
-        <label th:for="email">email: </label>
-        <input type="text" name="mail"/>
-        <span class="validationError" th:if="${customError.customErrors.containsKey('mail')==true}">Already used! Try with different one</span>
-
-        <span class="validationError"
-              th:if="${#fields.hasErrors('mail')}"
-              th:errors="*{mail}">Mail Error</span>
-        <br/><br/>
-
-        <label th:for="username">fullname: </label>
-        <input type="text" name="username"/>
-        <span class="validationError"
-              th:if="${#fields.hasErrors('username')}"
-              th:errors="*{username}">Mail Error</span>
-        <br/><br/>
-        <label th:for="password">password: </label>
-        <input type="password" name="password"/>
-        <span class="validationError"
-              th:if="${#fields.hasErrors('password')}"
-              th:errors="*{password}">Mail Error</span>
-        <br/><br/>
-
-        <label th:for="confirm">confirm password: </label>
-        <input type="password" name="confirm"/>
-        <span class="validationError" th:if="${customError.customErrors.containsKey('confirm')==true}">Confirmation mismatched</span>
-        <br/><br/>
-        <span class="validationError"
-              th:if="${#fields.hasErrors('confirm')}"
-              th:errors="*{confirm}">Confirmation mismatched by has error</span>
-
-        <input type="submit" value="Register"/>
-        <span class="right-button">
-            <a th:href="@{/login}">login?</a>
-        </span>
-    </form>
-</div>
+    </div>
 </body>
 </html>

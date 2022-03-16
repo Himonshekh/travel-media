@@ -19,7 +19,7 @@ public class RegistrationDto {
 //    @Size(min = 1,message = "password must be at least 5 characters long")
     private String confirm;
     @NotNull
-    @Size(min = 3,message = "username must be at least 5 characters long")
+    @Size(min = 5,message = "username must be at least 5 characters long")
     private String username;
 
     public User toUser(PasswordEncoder passwordEncoder){

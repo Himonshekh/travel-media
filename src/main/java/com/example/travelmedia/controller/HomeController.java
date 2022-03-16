@@ -63,7 +63,7 @@ public class HomeController {
         model.addAttribute(locationList);
         model.addAttribute(user1);
         model.addAttribute(postDto);
-        log.info("home page psotDto : "+postDto);
+        log.info("home page postDto : "+postDto);
         return "home";
     }
     @GetMapping("/profile")

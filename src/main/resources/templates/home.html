@@ -10,89 +10,131 @@
 </head>
 
 <body>
+<nav class="navbar">
+    <div class="container">
+        <div class="item">
+            <ul class="nav">
+                <li><a class="active" th:href="@{/home}">Home</a></li>
+                <li><a th:href="@{/home/profile}">Profile</a></li>
+                <li><a th:href="@{/home/friends}">Friends</a></li>
+                <li> <a th:href="@{/logout}">Log Out</a></li>
+                <li>
+                    <div class="search-container">
+                        <form method="POST" th:action="@{/home/search}">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit">Search</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
+        </div>
 
-<div class="topnav">
-    <a class="active" th:href="@{/home}">Home</a>
-    <a th:href="@{/home/profile}">Profile</a>
-    <a th:href="@{/home/friends}">Friends</a>
-    <a th:href="@{/logout}">Log Out</a>
-    <div class="search-container">
-        <form method="POST" th:action="@{/home/search}">
-            <input type="text" placeholder="Search.." name="search">
-            <button type="submit">Submit</button>
-        </form>
     </div>
-</div>
+</nav>
 
-<div class="main-div">
-    <h1 >Welcome to Travel media......</h1><br/>
+<!--<div class="topnav">-->
+<!--    <a class="active" th:href="@{/home}">Home</a>-->
+<!--    <a th:href="@{/home/profile}">Profile</a>-->
+<!--    <a th:href="@{/home/friends}">Friends</a>-->
+<!--    <a th:href="@{/logout}">Log Out</a>-->
+<!--    <div class="search-container">-->
+<!--        <form method="POST" th:action="@{/home/search}">-->
+<!--            <input type="text" placeholder="Search.." name="search">-->
+<!--            <button type="submit">Submit</button>-->
+<!--        </form>-->
+<!--    </div>-->
+<!--</div>-->
+<div class="wrapper-div">
+    <div class="container">
+        <div class="main-body">
+            <h1 >Welcome to Travel media</h1><br/>
 
-    <div class="create-post-class" th:object="${privacyDto}">
-        <form method="POST" th:action="@{/post/create}" id="createPostForm" th:object="${postDto}" >
-            <div th:if="${#fields.hasErrors()}">
-                <span class="validationError">
-                    Please correct the problems below and resubmit.
-                </span>
-            </div>
+            <div class="create-post-class" th:object="${privacyDto}">
+                <form method="POST" th:action="@{/post/create}" id="createPostForm" th:object="${postDto}" >
+                    <div th:if="${#fields.hasErrors()}">
+                        <span class="validationError">
+                            Please correct the problems below and resubmit.
+                        </span>
+                    </div>
+                    <div class="form-body">
+                        <div class="form-body-section">
+                            <label for="status">Post a Status</label>
+                            <textarea name="status" id="status" th:value="${postDto.getStatus()}"></textarea>
 
-            <label for="status">Post a Status</label><br/>
-            <textarea name="status" id="status" th:value="${postDto.getStatus()}"></textarea><br/>
-            <span class="validationError"
-                  th:if="${#fields.hasErrors('status')}"
-                  th:errors="*{status}">status Error</span>
+                            <span class="validationError"
+                                  th:if="${#fields.hasErrors('status')}"
+                                  th:errors="*{status}">status Error</span>
+                        </div>
 
-            <div class="margin-top-div">
-                <label>choose privacy</label>
-            </div>
-            <div id="choose-id" th:each="privacy : ${privacyDto.getPrivacies()}">
-                <input name="privacy" type="radio" th:value="${privacy}" />
-                <span th:text="${privacy}">Public</span>
-            </div>
-            <span class="validationError"
-                  th:if="${#fields.hasErrors('privacy')}"
-                  th:errors="*{privacy}">privacy Error</span>
+                        <div class="form-body-section">
+                            <div class="margin-top-div">
+                                <label>choose privacy</label>
+                            </div>
+                            <div class="privacy-section">
+                                <div id="choose-id" th:each="privacy : ${privacyDto.getPrivacies()}">
+                                    <input name="privacy" type="radio" th:value="${privacy}"/>
+                                    <span th:text="${privacy}">Public</span>
+                                </div>
+                                <span class="validationError"
+                                      th:if="${#fields.hasErrors('privacy')}"
+                                      th:errors="*{privacy}">privacy Error</span>
+                            </div>
 
-            <div class="margin-top-div" th:object="${locationList}">
-                <label>Check in</label>
-                <select name="location">
-                    <option th:each="location : ${locationList}" th:text="${location.getName()}"></option>
-                </select>
-            </div>
-            <span class="validationError"
-                  th:if="${#fields.hasErrors('location')}"
-                  th:errors="*{location}">location Error</span>
-            <div class="margin-top-div">
-                <input type="submit" value="post"/>
-            </div>
-        </form>
-    </div>
-    <div class="view-post-class" th:object="${postDtoList}">
-    <!--    <form method="POST"  th:action="@{'/post/edit/'+${postDto.getId()}}" id="viewForm" th:action="@{/post/edit}" >-->
-            <div th:each="postDto : ${postDtoList}">
-                <div class="single-status"  th:object="${postDtoList}">
+                        </div>
 
-                    <span th:if="${postDto.getPined()==1}">This is pinned post</span><br/>
-                    <i class="fas fa-user"></i>
-                    <span>Mr. </span>
-                    <span th:text="${postDto.getUser().getUsername()}" >username</span><br/>
-
-                    <div class="status-body">
-                        <i class="fa fa-sticky-note"></i>
-                        <span th:text="${postDto.getStatus()}" >status</span><br/>
+                        <div class="form-body-section">
+                            <div class="margin-top-div" th:object="${locationList}">
+                                <label>Check in</label>
+                                <select name="location">
+                                    <option th:each="location : ${locationList}" th:text="${location.getName()}"></option>
+                                </select>
+                            </div>
+                            <span class="validationError"
+                                  th:if="${#fields.hasErrors('location')}"
+                                  th:errors="*{location}">location Error</span>
+                        </div>
+                        <div class="form-body-section">
+                            <div class="margin-top-div">
+                                <input type="submit" value="post"/>
+                            </div>
+                        </div>
                     </div>
 
-                    <i class="fas fa-map-marker-alt"></i>
-                    <span th:text="${postDto.getLocation()}">location</span><br/>
-
-    <!--                <div th:object="${user}">-->
-                        <div class="edit-button" th:if="${postDto.getUser().getId().equals(user.getId())}">
-                            <a th:href="@{'/post/edit/'+${postDto.getId()}}">Edit</a>
-                        </div>
-    <!--                </div>-->
-                </div>
+                </form>
             </div>
-    <!--    </form>-->
+            <div class="view-post-class" th:object="${postDtoList}">
+                <!--    <form method="POST"  th:action="@{'/post/edit/'+${postDto.getId()}}" id="viewForm" th:action="@{/post/edit}" >-->
+                <div th:each="postDto : ${postDtoList}">
+                    <div class="single-status"  th:object="${postDtoList}">
+
+                        <span th:if="${postDto.getPined()==1}">
+                            This is pinned post
+                            <br/>
+                        </span>
+                        <i class="fas fa-user"></i>
+                        <span>Mr. </span>
+                        <span th:text="${postDto.getUser().getUsername()}" >username</span>
+
+                        <div class="status-body">
+<!--                            <i class="fa fa-sticky-note"></i>-->
+                            <span th:text="${postDto.getStatus()}" >status</span>
+                        </div>
+
+                        <i class="fas fa-map-marker-alt"></i>
+                        <span th:text="${postDto.getLocation()}">location</span>
+                        <div class="edit-pin-button" th:if="${postDto.getUser().getId().equals(user.getId())}">
+                            <div class="edit-pin-button-single">
+                                <a th:href="@{'/post/edit/'+${postDto.getId()}}">Edit</a>
+                            </div>
+                        </div>
+                        <!--                </div>-->
+                    </div>
+                </div>
+                <!--    </form>-->
+            </div>
+        </div>
     </div>
 </div>
+
 </body>
 </html>

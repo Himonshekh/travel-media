@@ -8,45 +8,92 @@
     <script type="text/javascript" th:src="@{/js/dropdown.js}"></script>
 </head>
 <body>
-<div class="topnav">
-    <a th:href="@{/home}">Home</a>
-    <a class="active" th:href="@{/home/profile}">Profile</a>
-    <a th:href="@{/home/friends}">Friends</a>
-    <a th:href="@{/logout}">Log Out</a>
-    <div class="search-container">
-        <form method="post" th:action="@{/home/search}">
-            <input type="text" placeholder="Search.." name="search">
-            <button type="submit">Submit</button>
-        </form>
-    </div>
-</div>
-<div class="main-div">
-    <h1 th:text="'Mr. '+${user.getUsername()}+ ' Profile'">profile page</h1>
-    <div class="view-post-class" th:object="${postDtoList}">
-        <div th:each="postDto : ${postDtoList}">
-            <div class="single-status" th:object="${postDtoList}">
-                <i class="fas fa-user"></i>
-                <span>Mr. </span>
-                <span th:text="${postDto.getUser().getUsername()}" >username</span><br/>
-                <div class="status-body">
-                    <i class="fa fa-sticky-note"></i>
-                    <span th:text="${postDto.getStatus()}" >status</span><br/>
-                </div>
-
-                <i class="fas fa-map-marker-alt"></i>
-                <span th:text="${postDto.getLocation()}">location</span><br/>
-                <div class="edit-pin-button">
-                    <a th:href="@{'/post/edit/'+${postDto.getId()}}">Edit</a>
-                    <span th:if="${postDto.getPined()==1}">pinned</span>
-                    <span th:if="${postDto.getPined()==0}">
-                        <a th:href="@{'/post/pined/'+${postDto.getId()}}">pin?</a>
-                    </span>
-                </div>
-                <br/>
-            </div>
+<nav class="navbar">
+    <div class="container">
+        <div class="item">
+            <ul class="nav">
+                <li><a class="active" th:href="@{/home}">Home</a></li>
+                <li><a th:href="@{/home/profile}">Profile</a></li>
+                <li><a th:href="@{/home/friends}">Friends</a></li>
+                <li> <a th:href="@{/logout}">Log Out</a></li>
+                <li>
+                    <div class="search-container">
+                        <form method="POST" th:action="@{/home/search}">
+                            <input type="text" placeholder="Search.." name="search">
+                            <button type="submit">Search</button>
+                        </form>
+                    </div>
+                </li>
+            </ul>
         </div>
-        <!--    </form>-->
+
+    </div>
+</nav>
+
+<div class="wrapper-div">
+    <div class="container">
+        <div class="main-body">
+            <h1 th:text="'Mr. '+${user.getUsername()}+ ''">profile page</h1><br/>
+            <div class="">
+                <div class="view-post-class" th:object="${postDtoList}">
+                    <div th:each="postDto : ${postDtoList}">
+                        <div class="single-status" th:object="${postDtoList}">
+                            <i class="fas fa-user"></i>
+                            <span>Mr. </span>
+                            <span th:text="${postDto.getUser().getUsername()}" >username</span><br/>
+                            <div class="status-body">
+                                <span th:text="${postDto.getStatus()}" >status</span><br/>
+                            </div>
+
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span th:text="${postDto.getLocation()}">location</span><br/>
+
+                            <div class="edit-pin-button">
+                                <div class="edit-pin-button-single">
+                                    <a th:href="@{'/post/edit/'+${postDto.getId()}}">Edit</a>
+                                </div>
+                                <span th:if="${postDto.getPined()==1}">pinned</span>
+                                <div class="edit-pin-button-single" th:if="${postDto.getPined()==0}">
+                                    <a th:href="@{'/post/pined/'+${postDto.getId()}}">pin?</a>
+                                </div>
+                            </div>
+                            <br/>
+                        </div>
+                    </div>
+                    <!--    </form>-->
+                </div>
+            </div>
+
+        </div>
     </div>
 </div>
+<!--<div class="main-div">-->
+<!--    <h1 th:text="'Mr. '+${user.getUsername()}+ ' Profile'">profile page</h1>-->
+<!--    <div class="view-post-class" th:object="${postDtoList}">-->
+<!--        <div th:each="postDto : ${postDtoList}">-->
+<!--            <div class="single-status" th:object="${postDtoList}">-->
+<!--                <i class="fas fa-user"></i>-->
+<!--                <span>Mr. </span>-->
+<!--                <span th:text="${postDto.getUser().getUsername()}" >username</span><br/>-->
+<!--                <div class="status-body">-->
+<!--                    <i class="fa fa-sticky-note"></i>-->
+<!--                    <span th:text="${postDto.getStatus()}" >status</span><br/>-->
+<!--                </div>-->
+
+<!--                <i class="fas fa-map-marker-alt"></i>-->
+<!--                <span th:text="${postDto.getLocation()}">location</span><br/>-->
+<!--                <div class="edit-pin-button">-->
+<!--                    <a th:href="@{'/post/edit/'+${postDto.getId()}}">Edit</a>-->
+<!--                    <span th:if="${postDto.getPined()==1}">pinned</span>-->
+<!--                    <span th:if="${postDto.getPined()==0}">-->
+<!--                        <a th:href="@{'/post/pined/'+${postDto.getId()}}">pin?</a>-->
+<!--                    </span>-->
+<!--                </div>-->
+<!--                <br/>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        &lt;!&ndash;    </form>&ndash;&gt;-->
+<!--    </div>-->
+<!--</div>-->
 </body>
 </html>
